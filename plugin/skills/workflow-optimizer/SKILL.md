@@ -1,5 +1,5 @@
 ---
-name: claude-workflow-optimizer
+name: workflow-optimizer
 description: >
   Analyze and optimize .claude/ workflow ecosystem — rules, agents, commands, memory, settings.
   Use this skill when the user mentions workflow optimization, pipeline efficiency, agent bloat,

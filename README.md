@@ -1,92 +1,58 @@
-# claude-workflow-optimizer
+# claude-optimizer
 
-A Claude Code plugin for analyzing and optimizing `.claude/` workflow ecosystems — rules, agents, commands, memory, and settings — following the architecture patterns established by Boris Cherny (Head of Claude Code, Anthropic).
+A Claude Code plugin that helps you **optimize your workflow** and **build better skills** — two skills, one plugin.
 
-## What it does
+## Skills
 
-Scans your entire `.claude/` directory and detects inefficiencies across 4 dimensions using parallel subagent analysis:
+### 1. Workflow Optimizer
+
+Scans your `.claude/` directory and detects inefficiencies across 4 dimensions using parallel subagent analysis.
 
 | Dimension | What it checks |
 |-----------|---------------|
-| **Rule & Instruction Efficiency** (2x weight) | Instruction overload, monolithic CLAUDE.md, rule duplication, dead instructions, over-specified examples |
-| **Token Efficiency** | Agent profile bloat, inline data, bilingual duplication, command bloat, unused MCP servers |
-| **Consistency** | Agent boundary overlap, memory staleness, orphan memory, rule conflicts, settings drift |
-| **Agent & Command Architecture** | Too many agents, unclear triggers, command-agent duplication, disconnected agents |
+| **Rule & Instruction Efficiency** (2x weight) | Instruction overload, monolithic CLAUDE.md, rule duplication, dead instructions |
+| **Token Efficiency** | Agent profile bloat, inline data, bilingual duplication, unused MCP servers |
+| **Consistency** | Agent boundary overlap, memory staleness, rule conflicts, settings drift |
+| **Agent & Command Architecture** | Too many agents, unclear triggers, command-agent duplication |
 
-**22 base anti-patterns** + **6 conditional checks** (activated when pipeline/handoff/SSOT assets are detected), each with BAD/GOOD examples, severity rating, and specific fix.
+**22 base anti-patterns** + **6 conditional checks**, each with severity rating and specific fix.
 
-## Target Metrics
+```bash
+/claude-optimizer:workflow-optimizer analyze   # Report issues (default)
+/claude-optimizer:workflow-optimizer optimize   # Analysis + optimized file versions
+/claude-optimizer:workflow-optimizer apply      # Report + directly apply safe fixes
+/claude-optimizer:workflow-optimizer audit      # Deep dive with git history analysis
+/claude-optimizer:workflow-optimizer migrate    # Split monolithic CLAUDE.md into rules/
+```
 
-| Asset | Ideal | Warning | Critical |
-|-------|-------|---------|----------|
-| CLAUDE.md | ~170 lines / ~2.5k tokens | >250 lines | >400 lines |
-| Agent profile | ~150 lines / ~2k tokens | >300 lines | >450 lines |
-| Rule file | ~50 lines / ~700 tokens | >100 lines | >200 lines |
-| Command file | ~30 lines / ~400 tokens | >80 lines | >150 lines |
-| Total instructions | <150 across all files | >200 | >300 |
+### 2. Skill Advisor
+
+Helps you decide **what** skills to build, **how** to structure them, and **whether** existing skills are well-designed. Based on [Thariq's lessons from building Claude Code](https://x.com/trq212/status/2033949937936085378).
+
+Includes reference materials on the 9 skill categories, 8 design principles, 10 anti-patterns, folder structure templates, and description writing guide.
+
+```bash
+/claude-optimizer:skill-advisor audit           # Evaluate skill coverage across 9 categories
+/claude-optimizer:skill-advisor plan            # Plan your next skill (asks 3 questions)
+/claude-optimizer:skill-advisor discover        # Scan project for skill-worthy patterns
+/claude-optimizer:skill-advisor review <path>   # Score a skill against 8 design principles
+```
 
 ## Installation
 
 ```bash
-claude plugin marketplace add https://github.com/abe1272001/claude-workflow-optimizer
-claude plugin install workflow-optimizer@claude-workflow-optimizer
+claude plugin marketplace add https://github.com/abe1272001/claude-optimizer
+claude plugin install claude-optimizer@workflow-optimizer
+claude plugin install claude-optimizer@skill-advisor
 ```
 
 ### Updating
 
 ```bash
-claude plugin marketplace update claude-workflow-optimizer
-claude plugin update workflow-optimizer@claude-workflow-optimizer
+claude plugin marketplace update claude-optimizer
+claude plugin update claude-optimizer@workflow-optimizer
+claude plugin update claude-optimizer@skill-advisor
 ```
-
-## Usage
-
-```bash
-/workflow-optimizer analyze     # Report issues (default, read-only)
-/workflow-optimizer optimize    # Full analysis + optimized file versions
-/workflow-optimizer apply       # Report + directly apply safe fixes
-/workflow-optimizer audit       # Deep dive with git history analysis
-/workflow-optimizer migrate     # Split monolithic CLAUDE.md into modular rules/
-```
-
-## Output
-
-```
-═══════════════════════════════════════════
-Workflow Optimizer Report
-═══════════════════════════════════════════
-
-## Health Score
-| Dimension                      | Score | Status |
-|--------------------------------|-------|--------|
-| Rule & Instruction Efficiency  | X/5   | G/Y/R  |
-| Token Efficiency               | X/5   | G/Y/R  |
-| Consistency                    | X/5   | G/Y/R  |
-| Agent & Command Architecture   | X/5   | G/Y/R  |
-| Overall                        | X/5   |        |
-
-Overall = (Rule Efficiency x 2 + Token + Consistency + Architecture) / 5
-
-## Anti-Patterns Found
-### HIGH — [description] — [location] — [fix]
-### MEDIUM — ...
-### LOW — ...
-
-## Top 5 Recommendations
-## Token Savings Estimate
-```
-
-## Design Methodology
-
-Built using the [7 Patterns for effective SKILL.md design](https://github.com/kojott/claude-docu-optimizer):
-
-1. **Single-File Architecture** — YAML frontmatter + complete prompt
-2. **Three-Phase Execution** — Discovery → Parallel Analysis → Synthesis
-3. **Quantified Benchmarks** — Numbers, not adjectives
-4. **Anti-Pattern Catalogue** — BAD/GOOD examples for each
-5. **Mode Switching** — One skill, multiple use cases
-6. **Fixed Output Format** — Comparable, trackable results
-7. **Execution Rules** — Hard guardrails at the end
 
 ## License
 
